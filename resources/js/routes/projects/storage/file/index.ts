@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-export const destroy = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -19,7 +19,7 @@ destroy.definition = {
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-destroy.url = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions) => {
+destroy.url = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -50,7 +50,7 @@ destroy.url = (args: { project: string | number | { id: string | number }, bucke
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-destroy.delete = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -60,7 +60,7 @@ destroy.delete = (args: { project: string | number | { id: string | number }, bu
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-    const destroyForm = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -75,7 +75,7 @@ destroy.delete = (args: { project: string | number | { id: string | number }, bu
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-        destroyForm.delete = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

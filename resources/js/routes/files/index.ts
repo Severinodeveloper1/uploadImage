@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-export const secure = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const secure = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: secure.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ secure.definition = {
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-secure.url = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+secure.url = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { file: args }
     }
@@ -52,7 +52,7 @@ secure.url = (args: { file: string | number | { id: string | number } } | [file:
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-secure.get = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+secure.get = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: secure.url(args, options),
     method: 'get',
 })
@@ -61,7 +61,7 @@ secure.get = (args: { file: string | number | { id: string | number } } | [file:
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-secure.head = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+secure.head = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: secure.url(args, options),
     method: 'head',
 })
@@ -71,7 +71,7 @@ secure.head = (args: { file: string | number | { id: string | number } } | [file
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-    const secureForm = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const secureForm = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: secure.url(args, options),
         method: 'get',
     })
@@ -81,7 +81,7 @@ secure.head = (args: { file: string | number | { id: string | number } } | [file
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-        secureForm.get = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        secureForm.get = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: secure.url(args, options),
             method: 'get',
         })
@@ -90,7 +90,7 @@ secure.head = (args: { file: string | number | { id: string | number } } | [file
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-        secureForm.head = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        secureForm.head = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: secure.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

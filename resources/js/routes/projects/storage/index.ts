@@ -5,7 +5,7 @@ import file from './file'
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-export const bucket = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const bucket = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: bucket.url(args, options),
     method: 'get',
 })
@@ -20,7 +20,7 @@ bucket.definition = {
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-bucket.url = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions) => {
+bucket.url = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -48,7 +48,7 @@ bucket.url = (args: { project: string | number | { id: string | number }, bucket
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-bucket.get = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+bucket.get = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: bucket.url(args, options),
     method: 'get',
 })
@@ -57,7 +57,7 @@ bucket.get = (args: { project: string | number | { id: string | number }, bucket
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-bucket.head = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+bucket.head = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: bucket.url(args, options),
     method: 'head',
 })
@@ -67,7 +67,7 @@ bucket.head = (args: { project: string | number | { id: string | number }, bucke
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-    const bucketForm = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const bucketForm = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: bucket.url(args, options),
         method: 'get',
     })
@@ -77,7 +77,7 @@ bucket.head = (args: { project: string | number | { id: string | number }, bucke
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-        bucketForm.get = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        bucketForm.get = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: bucket.url(args, options),
             method: 'get',
         })
@@ -86,7 +86,7 @@ bucket.head = (args: { project: string | number | { id: string | number }, bucke
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-        bucketForm.head = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        bucketForm.head = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: bucket.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -102,7 +102,7 @@ bucket.head = (args: { project: string | number | { id: string | number }, bucke
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-export const upload = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const upload = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: upload.url(args, options),
     method: 'post',
 })
@@ -117,7 +117,7 @@ upload.definition = {
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-upload.url = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions) => {
+upload.url = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -145,7 +145,7 @@ upload.url = (args: { project: string | number | { id: string | number }, bucket
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-upload.post = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+upload.post = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: upload.url(args, options),
     method: 'post',
 })
@@ -155,7 +155,7 @@ upload.post = (args: { project: string | number | { id: string | number }, bucke
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-    const uploadForm = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const uploadForm = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: upload.url(args, options),
         method: 'post',
     })
@@ -165,7 +165,7 @@ upload.post = (args: { project: string | number | { id: string | number }, bucke
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-        uploadForm.post = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        uploadForm.post = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: upload.url(args, options),
             method: 'post',
         })

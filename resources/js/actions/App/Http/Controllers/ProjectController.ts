@@ -137,7 +137,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-export const show = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -152,7 +152,7 @@ show.definition = {
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-show.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+show.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -185,7 +185,7 @@ show.url = (args: { project: string | number | { id: string | number } } | [proj
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-show.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -194,7 +194,7 @@ show.get = (args: { project: string | number | { id: string | number } } | [proj
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-show.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -204,7 +204,7 @@ show.head = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-    const showForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const showForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show.url(args, options),
         method: 'get',
     })
@@ -214,7 +214,7 @@ show.head = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-        showForm.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, options),
             method: 'get',
         })
@@ -223,7 +223,7 @@ show.head = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-        showForm.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -239,7 +239,7 @@ show.head = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-export const update = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -254,7 +254,7 @@ update.definition = {
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-update.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -287,7 +287,7 @@ update.url = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-update.put = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -297,7 +297,7 @@ update.put = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-    const updateForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -312,7 +312,7 @@ update.put = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-        updateForm.put = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -328,7 +328,7 @@ update.put = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-export const destroy = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -343,7 +343,7 @@ destroy.definition = {
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-destroy.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -376,7 +376,7 @@ destroy.url = (args: { project: string | number | { id: string | number } } | [p
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-destroy.delete = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -386,7 +386,7 @@ destroy.delete = (args: { project: string | number | { id: string | number } } |
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-    const destroyForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -401,7 +401,7 @@ destroy.delete = (args: { project: string | number | { id: string | number } } |
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-        destroyForm.delete = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -417,7 +417,7 @@ destroy.delete = (args: { project: string | number | { id: string | number } } |
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-export const storage = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const storage = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: storage.url(args, options),
     method: 'get',
 })
@@ -432,7 +432,7 @@ storage.definition = {
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-storage.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+storage.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -465,7 +465,7 @@ storage.url = (args: { project: string | number | { id: string | number } } | [p
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-storage.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+storage.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: storage.url(args, options),
     method: 'get',
 })
@@ -474,7 +474,7 @@ storage.get = (args: { project: string | number | { id: string | number } } | [p
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-storage.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+storage.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: storage.url(args, options),
     method: 'head',
 })
@@ -484,7 +484,7 @@ storage.head = (args: { project: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-    const storageForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const storageForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: storage.url(args, options),
         method: 'get',
     })
@@ -494,7 +494,7 @@ storage.head = (args: { project: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-        storageForm.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        storageForm.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: storage.url(args, options),
             method: 'get',
         })
@@ -503,7 +503,7 @@ storage.head = (args: { project: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-        storageForm.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        storageForm.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: storage.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -519,7 +519,7 @@ storage.head = (args: { project: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-export const storageBucket = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const storageBucket = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: storageBucket.url(args, options),
     method: 'get',
 })
@@ -534,7 +534,7 @@ storageBucket.definition = {
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-storageBucket.url = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions) => {
+storageBucket.url = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -562,7 +562,7 @@ storageBucket.url = (args: { project: string | number | { id: string | number },
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-storageBucket.get = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+storageBucket.get = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: storageBucket.url(args, options),
     method: 'get',
 })
@@ -571,7 +571,7 @@ storageBucket.get = (args: { project: string | number | { id: string | number },
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-storageBucket.head = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+storageBucket.head = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: storageBucket.url(args, options),
     method: 'head',
 })
@@ -581,7 +581,7 @@ storageBucket.head = (args: { project: string | number | { id: string | number }
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-    const storageBucketForm = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const storageBucketForm = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: storageBucket.url(args, options),
         method: 'get',
     })
@@ -591,7 +591,7 @@ storageBucket.head = (args: { project: string | number | { id: string | number }
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-        storageBucketForm.get = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        storageBucketForm.get = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: storageBucket.url(args, options),
             method: 'get',
         })
@@ -600,7 +600,7 @@ storageBucket.head = (args: { project: string | number | { id: string | number }
  * @see app/Http/Controllers/ProjectController.php:165
  * @route '/dashboard/projects/{project}/storage/{bucket}'
  */
-        storageBucketForm.head = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        storageBucketForm.head = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: storageBucket.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -616,7 +616,7 @@ storageBucket.head = (args: { project: string | number | { id: string | number }
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-export const storeBucket = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const storeBucket = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: storeBucket.url(args, options),
     method: 'post',
 })
@@ -631,7 +631,7 @@ storeBucket.definition = {
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-storeBucket.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+storeBucket.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -664,7 +664,7 @@ storeBucket.url = (args: { project: string | number | { id: string | number } } 
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-storeBucket.post = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+storeBucket.post = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: storeBucket.url(args, options),
     method: 'post',
 })
@@ -674,7 +674,7 @@ storeBucket.post = (args: { project: string | number | { id: string | number } }
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-    const storeBucketForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const storeBucketForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: storeBucket.url(args, options),
         method: 'post',
     })
@@ -684,7 +684,7 @@ storeBucket.post = (args: { project: string | number | { id: string | number } }
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-        storeBucketForm.post = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        storeBucketForm.post = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: storeBucket.url(args, options),
             method: 'post',
         })
@@ -695,7 +695,7 @@ storeBucket.post = (args: { project: string | number | { id: string | number } }
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-export const destroyBucket = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroyBucket = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyBucket.url(args, options),
     method: 'delete',
 })
@@ -710,7 +710,7 @@ destroyBucket.definition = {
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-destroyBucket.url = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions) => {
+destroyBucket.url = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -738,7 +738,7 @@ destroyBucket.url = (args: { project: string | number | { id: string | number },
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-destroyBucket.delete = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroyBucket.delete = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyBucket.url(args, options),
     method: 'delete',
 })
@@ -748,7 +748,7 @@ destroyBucket.delete = (args: { project: string | number | { id: string | number
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-    const destroyBucketForm = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyBucketForm = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroyBucket.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -763,7 +763,7 @@ destroyBucket.delete = (args: { project: string | number | { id: string | number
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-        destroyBucketForm.delete = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyBucketForm.delete = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroyBucket.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -779,7 +779,7 @@ destroyBucket.delete = (args: { project: string | number | { id: string | number
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-export const uploadFile = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const uploadFile = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: uploadFile.url(args, options),
     method: 'post',
 })
@@ -794,7 +794,7 @@ uploadFile.definition = {
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-uploadFile.url = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions) => {
+uploadFile.url = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -822,7 +822,7 @@ uploadFile.url = (args: { project: string | number | { id: string | number }, bu
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-uploadFile.post = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+uploadFile.post = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: uploadFile.url(args, options),
     method: 'post',
 })
@@ -832,7 +832,7 @@ uploadFile.post = (args: { project: string | number | { id: string | number }, b
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-    const uploadFileForm = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const uploadFileForm = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: uploadFile.url(args, options),
         method: 'post',
     })
@@ -842,7 +842,7 @@ uploadFile.post = (args: { project: string | number | { id: string | number }, b
  * @see app/Http/Controllers/ProjectController.php:258
  * @route '/dashboard/projects/{project}/storage/{bucket}/upload'
  */
-        uploadFileForm.post = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        uploadFileForm.post = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: uploadFile.url(args, options),
             method: 'post',
         })
@@ -853,7 +853,7 @@ uploadFile.post = (args: { project: string | number | { id: string | number }, b
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-export const destroyFile = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroyFile = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyFile.url(args, options),
     method: 'delete',
 })
@@ -868,7 +868,7 @@ destroyFile.definition = {
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-destroyFile.url = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions) => {
+destroyFile.url = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -899,7 +899,7 @@ destroyFile.url = (args: { project: string | number | { id: string | number }, b
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-destroyFile.delete = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroyFile.delete = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyFile.url(args, options),
     method: 'delete',
 })
@@ -909,7 +909,7 @@ destroyFile.delete = (args: { project: string | number | { id: string | number }
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-    const destroyFileForm = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyFileForm = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroyFile.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -924,7 +924,7 @@ destroyFile.delete = (args: { project: string | number | { id: string | number }
  * @see app/Http/Controllers/ProjectController.php:292
  * @route '/dashboard/projects/{project}/storage/{bucket}/files/{file}'
  */
-        destroyFileForm.delete = (args: { project: string | number | { id: string | number }, bucket: string | number, file: string | number } | [project: string | number | { id: string | number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyFileForm.delete = (args: { project: number | { id: number }, bucket: string | number, file: string | number } | [project: number | { id: number }, bucket: string | number, file: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroyFile.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

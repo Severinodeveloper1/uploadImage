@@ -140,7 +140,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-export const show = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -155,7 +155,7 @@ show.definition = {
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-show.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+show.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -188,7 +188,7 @@ show.url = (args: { project: string | number | { id: string | number } } | [proj
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-show.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -197,7 +197,7 @@ show.get = (args: { project: string | number | { id: string | number } } | [proj
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-show.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -207,7 +207,7 @@ show.head = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-    const showForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const showForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show.url(args, options),
         method: 'get',
     })
@@ -217,7 +217,7 @@ show.head = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-        showForm.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, options),
             method: 'get',
         })
@@ -226,7 +226,7 @@ show.head = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:68
  * @route '/dashboard/projects/{project}'
  */
-        showForm.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -242,7 +242,7 @@ show.head = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-export const update = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -257,7 +257,7 @@ update.definition = {
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-update.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -290,7 +290,7 @@ update.url = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-update.put = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -300,7 +300,7 @@ update.put = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-    const updateForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -315,7 +315,7 @@ update.put = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:109
  * @route '/dashboard/projects/{project}'
  */
-        updateForm.put = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -331,7 +331,7 @@ update.put = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-export const destroy = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -346,7 +346,7 @@ destroy.definition = {
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-destroy.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -379,7 +379,7 @@ destroy.url = (args: { project: string | number | { id: string | number } } | [p
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-destroy.delete = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -389,7 +389,7 @@ destroy.delete = (args: { project: string | number | { id: string | number } } |
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-    const destroyForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -404,7 +404,7 @@ destroy.delete = (args: { project: string | number | { id: string | number } } |
  * @see app/Http/Controllers/ProjectController.php:125
  * @route '/dashboard/projects/{project}'
  */
-        destroyForm.delete = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -420,7 +420,7 @@ destroy.delete = (args: { project: string | number | { id: string | number } } |
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-export const storage = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const storage = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: storage.url(args, options),
     method: 'get',
 })
@@ -435,7 +435,7 @@ storage.definition = {
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-storage.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+storage.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -468,7 +468,7 @@ storage.url = (args: { project: string | number | { id: string | number } } | [p
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-storage.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+storage.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: storage.url(args, options),
     method: 'get',
 })
@@ -477,7 +477,7 @@ storage.get = (args: { project: string | number | { id: string | number } } | [p
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-storage.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+storage.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: storage.url(args, options),
     method: 'head',
 })
@@ -487,7 +487,7 @@ storage.head = (args: { project: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-    const storageForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const storageForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: storage.url(args, options),
         method: 'get',
     })
@@ -497,7 +497,7 @@ storage.head = (args: { project: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-        storageForm.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        storageForm.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: storage.url(args, options),
             method: 'get',
         })
@@ -506,7 +506,7 @@ storage.head = (args: { project: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/ProjectController.php:140
  * @route '/dashboard/projects/{project}/storage'
  */
-        storageForm.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        storageForm.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: storage.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

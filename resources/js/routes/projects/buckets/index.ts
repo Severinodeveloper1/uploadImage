@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-export const store = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const store = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ store.definition = {
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-store.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+store.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -52,7 +52,7 @@ store.url = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-store.post = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+store.post = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ store.post = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-    const storeForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const storeForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(args, options),
         method: 'post',
     })
@@ -72,7 +72,7 @@ store.post = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:213
  * @route '/dashboard/projects/{project}/buckets'
  */
-        storeForm.post = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        storeForm.post = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(args, options),
             method: 'post',
         })
@@ -83,7 +83,7 @@ store.post = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-export const destroy = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -98,7 +98,7 @@ destroy.definition = {
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-destroy.url = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions) => {
+destroy.url = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -126,7 +126,7 @@ destroy.url = (args: { project: string | number | { id: string | number }, bucke
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-destroy.delete = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -136,7 +136,7 @@ destroy.delete = (args: { project: string | number | { id: string | number }, bu
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-    const destroyForm = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -151,7 +151,7 @@ destroy.delete = (args: { project: string | number | { id: string | number }, bu
  * @see app/Http/Controllers/ProjectController.php:242
  * @route '/dashboard/projects/{project}/buckets/{bucket}'
  */
-        destroyForm.delete = (args: { project: string | number | { id: string | number }, bucket: string | number } | [project: string | number | { id: string | number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { project: number | { id: number }, bucket: string | number } | [project: number | { id: number }, bucket: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

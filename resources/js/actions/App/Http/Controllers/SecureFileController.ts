@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-export const serve = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const serve = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: serve.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ serve.definition = {
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-serve.url = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+serve.url = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { file: args }
     }
@@ -52,7 +52,7 @@ serve.url = (args: { file: string | number | { id: string | number } } | [file: 
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-serve.get = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+serve.get = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: serve.url(args, options),
     method: 'get',
 })
@@ -61,7 +61,7 @@ serve.get = (args: { file: string | number | { id: string | number } } | [file: 
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-serve.head = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+serve.head = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: serve.url(args, options),
     method: 'head',
 })
@@ -71,7 +71,7 @@ serve.head = (args: { file: string | number | { id: string | number } } | [file:
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-    const serveForm = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const serveForm = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: serve.url(args, options),
         method: 'get',
     })
@@ -81,7 +81,7 @@ serve.head = (args: { file: string | number | { id: string | number } } | [file:
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-        serveForm.get = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        serveForm.get = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: serve.url(args, options),
             method: 'get',
         })
@@ -90,7 +90,7 @@ serve.head = (args: { file: string | number | { id: string | number } } | [file:
  * @see app/Http/Controllers/SecureFileController.php:17
  * @route '/files/{file}'
  */
-        serveForm.head = (args: { file: string | number | { id: string | number } } | [file: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        serveForm.head = (args: { file: number | { id: number } } | [file: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: serve.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/ApiTokenController.php:14
  * @route '/dashboard/projects/{project}/tokens'
  */
-export const index = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const index = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ index.definition = {
  * @see app/Http/Controllers/ApiTokenController.php:14
  * @route '/dashboard/projects/{project}/tokens'
  */
-index.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+index.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -52,7 +52,7 @@ index.url = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ApiTokenController.php:14
  * @route '/dashboard/projects/{project}/tokens'
  */
-index.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+index.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(args, options),
     method: 'get',
 })
@@ -61,7 +61,7 @@ index.get = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ApiTokenController.php:14
  * @route '/dashboard/projects/{project}/tokens'
  */
-index.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+index.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(args, options),
     method: 'head',
 })
@@ -71,7 +71,7 @@ index.head = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ApiTokenController.php:14
  * @route '/dashboard/projects/{project}/tokens'
  */
-    const indexForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const indexForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: index.url(args, options),
         method: 'get',
     })
@@ -81,7 +81,7 @@ index.head = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ApiTokenController.php:14
  * @route '/dashboard/projects/{project}/tokens'
  */
-        indexForm.get = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        indexForm.get = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url(args, options),
             method: 'get',
         })
@@ -90,7 +90,7 @@ index.head = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ApiTokenController.php:14
  * @route '/dashboard/projects/{project}/tokens'
  */
-        indexForm.head = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        indexForm.head = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -106,7 +106,7 @@ index.head = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ApiTokenController.php:34
  * @route '/dashboard/projects/{project}/tokens'
  */
-export const store = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const store = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -121,7 +121,7 @@ store.definition = {
  * @see app/Http/Controllers/ApiTokenController.php:34
  * @route '/dashboard/projects/{project}/tokens'
  */
-store.url = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+store.url = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { project: args }
     }
@@ -154,7 +154,7 @@ store.url = (args: { project: string | number | { id: string | number } } | [pro
  * @see app/Http/Controllers/ApiTokenController.php:34
  * @route '/dashboard/projects/{project}/tokens'
  */
-store.post = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+store.post = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -164,7 +164,7 @@ store.post = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ApiTokenController.php:34
  * @route '/dashboard/projects/{project}/tokens'
  */
-    const storeForm = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const storeForm = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(args, options),
         method: 'post',
     })
@@ -174,7 +174,7 @@ store.post = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ApiTokenController.php:34
  * @route '/dashboard/projects/{project}/tokens'
  */
-        storeForm.post = (args: { project: string | number | { id: string | number } } | [project: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        storeForm.post = (args: { project: number | { id: number } } | [project: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(args, options),
             method: 'post',
         })
@@ -185,7 +185,7 @@ store.post = (args: { project: string | number | { id: string | number } } | [pr
  * @see app/Http/Controllers/ApiTokenController.php:58
  * @route '/dashboard/projects/{project}/tokens/{token}'
  */
-export const destroy = (args: { project: string | number | { id: string | number }, token: string | number | { id: string | number } } | [project: string | number | { id: string | number }, token: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { project: number | { id: number }, token: number | { id: number } } | [project: number | { id: number }, token: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -200,7 +200,7 @@ destroy.definition = {
  * @see app/Http/Controllers/ApiTokenController.php:58
  * @route '/dashboard/projects/{project}/tokens/{token}'
  */
-destroy.url = (args: { project: string | number | { id: string | number }, token: string | number | { id: string | number } } | [project: string | number | { id: string | number }, token: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
+destroy.url = (args: { project: number | { id: number }, token: number | { id: number } } | [project: number | { id: number }, token: number | { id: number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     project: args[0],
@@ -230,7 +230,7 @@ destroy.url = (args: { project: string | number | { id: string | number }, token
  * @see app/Http/Controllers/ApiTokenController.php:58
  * @route '/dashboard/projects/{project}/tokens/{token}'
  */
-destroy.delete = (args: { project: string | number | { id: string | number }, token: string | number | { id: string | number } } | [project: string | number | { id: string | number }, token: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { project: number | { id: number }, token: number | { id: number } } | [project: number | { id: number }, token: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -240,7 +240,7 @@ destroy.delete = (args: { project: string | number | { id: string | number }, to
  * @see app/Http/Controllers/ApiTokenController.php:58
  * @route '/dashboard/projects/{project}/tokens/{token}'
  */
-    const destroyForm = (args: { project: string | number | { id: string | number }, token: string | number | { id: string | number } } | [project: string | number | { id: string | number }, token: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { project: number | { id: number }, token: number | { id: number } } | [project: number | { id: number }, token: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -255,7 +255,7 @@ destroy.delete = (args: { project: string | number | { id: string | number }, to
  * @see app/Http/Controllers/ApiTokenController.php:58
  * @route '/dashboard/projects/{project}/tokens/{token}'
  */
-        destroyForm.delete = (args: { project: string | number | { id: string | number }, token: string | number | { id: string | number } } | [project: string | number | { id: string | number }, token: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { project: number | { id: number }, token: number | { id: number } } | [project: number | { id: number }, token: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

@@ -23,6 +23,12 @@ npm install
 npm run build
 ```
 
+## 3.1 ejecutar seeder
+
+```bash
+php artisan db:seed
+```
+
 ## 4. Limpiar caché (si es necesario)
 
 ```bash
