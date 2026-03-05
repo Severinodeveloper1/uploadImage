@@ -38,11 +38,12 @@ class StorageApiController extends Controller
 
         $request->validate([
             'file' => 'required|file',
-            'path' => 'nullable|string|max:500',
+            'folder' => 'nullable|string|max:500',
+            'path'   => 'nullable|string|max:500', // alias legacy
         ]);
 
         $file = $request->file('file');
-        $folder = $request->input('path', '');
+        $folder = $request->input('folder') ?? $request->input('path', '');
 
         // Check MIME type
         if (!$bucket->isMimeTypeAllowed($file->getMimeType())) {
@@ -121,6 +122,11 @@ class StorageApiController extends Controller
 
         if ($request->has('folder')) {
             $query->where('folder', $request->input('folder'));
+        } else {
+            // Sin parámetro folder → solo archivos en la raíz (igual que el panel web)
+            $query->where(function ($q) {
+                $q->whereNull('folder')->orWhere('folder', '');
+            });
         }
 
         if ($request->has('search')) {
