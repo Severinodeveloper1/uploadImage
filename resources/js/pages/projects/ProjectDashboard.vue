@@ -77,7 +77,7 @@ const editForm = useForm({
 });
 
 function saveSettings() {
-    editForm.put(`/dashboard/projects/${props.project.id}`, {
+    editForm.transform(data => ({ ...data, _method: 'PUT' })).post(`/dashboard/projects/${props.project.id}`, {
         preserveScroll: true,
         onSuccess: () => {
             showEditModal.value = false;
@@ -86,7 +86,7 @@ function saveSettings() {
 }
 
 function deleteProject() {
-    router.delete(`/dashboard/projects/${props.project.id}`);
+    router.post(`/dashboard/projects/${props.project.id}`, { _method: 'DELETE' });
 }
 
 function formatBytes(bytes: number): string {

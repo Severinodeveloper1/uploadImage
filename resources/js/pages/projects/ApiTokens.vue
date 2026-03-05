@@ -88,7 +88,7 @@ function createToken() {
 }
 
 function revokeToken(tokenId: number) {
-    router.delete(`/dashboard/projects/${props.project.id}/tokens/${tokenId}`, {
+    router.post(`/dashboard/projects/${props.project.id}/tokens/${tokenId}`, { _method: 'DELETE' }, {
         preserveScroll: true,
         onSuccess: () => {
             showRevoke.value = null;

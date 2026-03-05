@@ -134,13 +134,13 @@ function createBucket() {
 
 function deleteBucket(slug: string) {
     if (!confirm('Delete this bucket and all its files?')) return;
-    router.delete(`/dashboard/projects/${props.project.id}/buckets/${slug}`);
+    router.post(`/dashboard/projects/${props.project.id}/buckets/${slug}`, { _method: 'DELETE' });
 }
 
 function deleteFile(fileId: number) {
     if (!confirm('Delete this file?')) return;
     if (!props.currentBucket) return;
-    router.delete(`/dashboard/projects/${props.project.id}/storage/${props.currentBucket.slug}/files/${fileId}`, {
+    router.post(`/dashboard/projects/${props.project.id}/storage/${props.currentBucket.slug}/files/${fileId}`, { _method: 'DELETE' }, {
         preserveScroll: true,
         onSuccess: () => {
             selectedFile.value = null;
