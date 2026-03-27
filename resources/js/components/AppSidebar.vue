@@ -19,14 +19,15 @@ import type { NavItem } from '@/types';
 
 const { can } = usePermissions();
 
-const mainNavItems: NavItem[] = [
+const mainNavItems: NavItem[] = [];
 
-    {
+if (can('projects.view_any') || can('projects.view_own')) {
+    mainNavItems.push({
         title: 'Projects',
         href: '/dashboard/projects',
         icon: HardDrive,
-    },
-];
+    });
+}
 
 if (can('tickets.view_any') || can('tickets.view_own')) {
     mainNavItems.push({
