@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^php artisan vendor:publish --provider=\"Spatie\\\\Permission\\\\PermissionServiceProvider\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

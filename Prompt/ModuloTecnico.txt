@@ -1,0 +1,201 @@
+Eres un experto en desarrollo Laravel con PostgreSQL 17. 
+Vas a implementar el módulo de "Fichas de Servicio Técnico" dentro 
+de un proyecto Laravel existente.
+
+=============================================================
+CONTEXTO DEL NEGOCIO
+=============================================================
+El sistema permite a técnicos registrar fichas de servicio para 
+equipos de clientes. Cada ficha documenta todo el ciclo: 
+recepción del equipo → diagnóstico → autorización del cliente → 
+reparación → entrega final. Incluye firmas digitales en dos 
+momentos clave del proceso.
+
+=============================================================
+STACK TECNOLÓGICO
+=============================================================
+- Backend: Laravel (versión del proyecto existente)
+- Base de datos: PostgreSQL 17
+- Firmas digitales: canvas HTML5 (signature_pad.js) 
+  almacenadas como base64 en la BD
+- Fotos: almacenamiento en storage/app con rutas en BD
+
+=============================================================
+ESTRUCTURA DE TABLAS — PostgreSQL
+=============================================================
+
+1. document_types (tipos de documento — tabla dinámica)
+   - id (PK)
+   - name (VARCHAR NOT NULL) — ej: "DNI", "RUC", "CE"
+   - code (VARCHAR UNIQUE NOT NULL) — ej: "dni", "ruc"
+   - is_active (BOOLEAN DEFAULT true)
+   - created_at, updated_at
+
+2. service_tickets (ficha principal)
+   - id (PK)
+   - ticket_code (VARCHAR UNIQUE NOT NULL) 
+     → formato sugerido: ST-YYYYMMDD-XXXX (autogenerado)
+   
+   -- DATOS DEL CLIENTE
+   - company_name (VARCHAR NULL)
+   - client_name (VARCHAR NOT NULL)
+   - document_type_id (FK → document_types, NOT NULL)
+   - document_number (VARCHAR NOT NULL)
+   - reported_failure (TEXT NOT NULL)
+   - phone (VARCHAR NOT NULL)
+   
+   -- DATOS DEL SERVICIO
+   - service_date (DATE NOT NULL) — fecha de atención
+   - entry_date (DATE NOT NULL) — fecha de ingreso
+   - start_time (TIME NOT NULL)
+   - end_time (TIME NULL) — se llena al cerrar
+   - technician_id (FK → users, NOT NULL) — usuario en sesión
+   
+   -- DATOS DEL PRODUCTO
+   - product_name (VARCHAR NOT NULL)
+   - model (VARCHAR NOT NULL)
+   - serial_number (VARCHAR NOT NULL)
+   - warranty_seals (VARCHAR NOT NULL) 
+     → sugerido: enum('intacto','roto','sin_sello')
+   
+   -- OBSERVACIONES FÍSICAS
+   - physical_observations (TEXT NULL)
+   
+   -- CONFORMIDAD DE RECEPCIÓN (Entrega al técnico)
+   - reception_client_signature (TEXT NULL) — base64
+   - reception_technician_signature (TEXT NULL) — base64
+   - reception_signed_at (TIMESTAMP NULL)
+   
+   -- REPARACIÓN (solo si cliente acepta)
+   - client_approved_repair (BOOLEAN DEFAULT false)
+   - repair_details (TEXT NULL) — obligatorio si approved=true
+   - final_description (TEXT NULL) — obligatorio si approved=true
+     → si no acepta: "El cliente no autorizó la reparación"
+   
+   -- CONFORMIDAD FINAL DEL SERVICIO
+   - delivery_client_signature (TEXT NULL) — base64
+   - delivery_technician_signature (TEXT NULL) — base64
+   - delivery_signed_at (TIMESTAMP NULL)
+   
+   -- ESTADO DE LA FICHA
+   - status (VARCHAR) 
+     → enum: 'draft','received','approved','repaired',
+             'delivered','closed'
+   - created_at, updated_at, deleted_at (softDelete)
+
+3. ticket_accessories (accesorios del equipo)
+   - id (PK)
+   - service_ticket_id (FK → service_tickets)
+   - name (VARCHAR NOT NULL) — ej: "Cargador", "Case"
+   - included (BOOLEAN DEFAULT true)
+   - notes (VARCHAR NULL)
+   - created_at, updated_at
+
+4. ticket_photos (fotos del equipo)
+   - id (PK)
+   - service_ticket_id (FK → service_tickets)
+   - photo_type (VARCHAR NOT NULL) 
+     → enum: 'before_service', 'after_service', 'reception'
+   - file_path (VARCHAR NOT NULL)
+   - caption (VARCHAR NULL)
+   - uploaded_by (FK → users)
+   - created_at, updated_at
+
+=============================================================
+FLUJO DEL PROCESO (Estados)
+=============================================================
+[draft] 
+  → Técnico crea la ficha y registra datos del cliente, 
+    producto y observaciones físicas
+    
+[received] 
+  → Cliente firma conformidad de RECEPCIÓN (entrega al técnico)
+    Se bloquean campos: cliente, producto, observaciones
+    
+[approved / rejected]
+  → Cliente decide si autoriza la reparación
+  → Si rechaza: final_description = "El cliente no autorizó 
+    la reparación", pasa directo a [delivered]
+    
+[repaired]
+  → Técnico completa repair_details y final_description
+  
+[delivered]
+  → Cliente firma conformidad FINAL del servicio
+  → Se registra end_time
+  
+[closed]
+  → Ficha completamente cerrada, apta para generar informe PDF
+
+=============================================================
+LO QUE DEBES IMPLEMENTAR
+=============================================================
+
+1. MIGRACIONES
+   Crea las 4 migraciones en orden correcto respetando FKs.
+   Usa softDeletes en service_tickets.
+
+2. MODELOS ELOQUENT
+   - ServiceTicket, DocumentType, TicketAccessory, TicketPhoto
+   - Relaciones: belongsTo, hasMany
+   - Accessors para ticket_code autogenerado
+   - Cast de booleanos y timestamps
+
+3. FORM REQUESTS (validación)
+   - StoreServiceTicketRequest
+   - UpdateRepairRequest (valida repair_details si approved=true)
+   - SignatureRequest (valida base64 de firmas)
+
+4. CONTROLADOR ServiceTicketController
+   Métodos: index, create, store, show, edit, update
+   Métodos adicionales:
+   - signReception(Request) — guarda firmas de recepción
+   - approveRepair(Request) — cliente aprueba/rechaza
+   - signDelivery(Request) — guarda firmas de entrega final
+   - generateReport(ServiceTicket) — retorna vista PDF
+
+5. COMPONENT DE FIRMA DIGITAL
+   - Integrar signature_pad.js en Blade/Livewire
+   - Campo canvas para dibujar firma
+   - Input hidden que recibe el base64 al submit
+   - Botón "Limpiar" para reintentar
+   - El técnico firma con el usuario en sesión 
+     (no requiere canvas, se genera automáticamente desde 
+     su firma registrada o iniciales)
+
+6. GENERACIÓN DE PDF (informe de culminación)
+   Usar Laravel-DomPDF o Snappy. El informe debe incluir:
+   - Todos los datos de la ficha
+   - Fotos before/after embebidas
+   - Lista de accesorios
+   - Imágenes de firmas (desde base64)
+   - Logo de empresa (configurable)
+   - Número de ficha como título
+
+7. SEEDERS
+   - DocumentTypeSeeder con: DNI, RUC, CE, Pasaporte
+
+=============================================================
+RESTRICCIONES Y REGLAS DE NEGOCIO
+=============================================================
+- ticket_code se genera automáticamente, nunca editable
+- Una vez en estado 'received', los datos de cliente y 
+  producto no pueden modificarse
+- repair_details y final_description son OBLIGATORIOS 
+  si client_approved_repair = true
+- Las firmas del técnico usan siempre auth()->user()
+- Las fotos 'before_service' solo se suben antes de 'repaired'
+- Las fotos 'after_service' solo se suben en estado 'repaired'
+- softDelete en service_tickets (nunca borrado físico)
+
+=============================================================
+RESPONDE EN ESTE ORDEN
+=============================================================
+1. Migraciones completas (los 4 archivos)
+2. Modelos con relaciones y casts
+3. Form Requests
+4. Controlador con todos los métodos
+5. Vista Blade del formulario con signature_pad.js integrado
+6. Vista PDF para el informe de culminación
+7. Seeder de DocumentType
+8. Rutas sugeridas (routes/web.php)

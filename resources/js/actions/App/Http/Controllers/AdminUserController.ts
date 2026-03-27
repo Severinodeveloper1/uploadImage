@@ -1,0 +1,260 @@
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+/**
+* @see \App\Http\Controllers\AdminUserController::index
+ * @see app/Http/Controllers/AdminUserController.php:15
+ * @route '/dashboard/admin/users'
+ */
+export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index.url(options),
+    method: 'get',
+})
+
+index.definition = {
+    methods: ["get","head"],
+    url: '/dashboard/admin/users',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\AdminUserController::index
+ * @see app/Http/Controllers/AdminUserController.php:15
+ * @route '/dashboard/admin/users'
+ */
+index.url = (options?: RouteQueryOptions) => {
+    return index.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\AdminUserController::index
+ * @see app/Http/Controllers/AdminUserController.php:15
+ * @route '/dashboard/admin/users'
+ */
+index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\AdminUserController::index
+ * @see app/Http/Controllers/AdminUserController.php:15
+ * @route '/dashboard/admin/users'
+ */
+index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: index.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\AdminUserController::index
+ * @see app/Http/Controllers/AdminUserController.php:15
+ * @route '/dashboard/admin/users'
+ */
+    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: index.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\AdminUserController::index
+ * @see app/Http/Controllers/AdminUserController.php:15
+ * @route '/dashboard/admin/users'
+ */
+        indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: index.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\AdminUserController::index
+ * @see app/Http/Controllers/AdminUserController.php:15
+ * @route '/dashboard/admin/users'
+ */
+        indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: index.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    index.form = indexForm
+/**
+* @see \App\Http\Controllers\AdminUserController::updateRole
+ * @see app/Http/Controllers/AdminUserController.php:44
+ * @route '/dashboard/admin/users/{user}/role'
+ */
+export const updateRole = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateRole.url(args, options),
+    method: 'patch',
+})
+
+updateRole.definition = {
+    methods: ["patch"],
+    url: '/dashboard/admin/users/{user}/role',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\AdminUserController::updateRole
+ * @see app/Http/Controllers/AdminUserController.php:44
+ * @route '/dashboard/admin/users/{user}/role'
+ */
+updateRole.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { user: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { user: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    user: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        user: typeof args.user === 'object'
+                ? args.user.id
+                : args.user,
+                }
+
+    return updateRole.definition.url
+            .replace('{user}', parsedArgs.user.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\AdminUserController::updateRole
+ * @see app/Http/Controllers/AdminUserController.php:44
+ * @route '/dashboard/admin/users/{user}/role'
+ */
+updateRole.patch = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateRole.url(args, options),
+    method: 'patch',
+})
+
+    /**
+* @see \App\Http\Controllers\AdminUserController::updateRole
+ * @see app/Http/Controllers/AdminUserController.php:44
+ * @route '/dashboard/admin/users/{user}/role'
+ */
+    const updateRoleForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: updateRole.url(args, {
+                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                        _method: 'PATCH',
+                        ...(options?.query ?? options?.mergeQuery ?? {}),
+                    }
+                }),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\AdminUserController::updateRole
+ * @see app/Http/Controllers/AdminUserController.php:44
+ * @route '/dashboard/admin/users/{user}/role'
+ */
+        updateRoleForm.patch = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: updateRole.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PATCH',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+    
+    updateRole.form = updateRoleForm
+/**
+* @see \App\Http\Controllers\AdminUserController::toggleActive
+ * @see app/Http/Controllers/AdminUserController.php:70
+ * @route '/dashboard/admin/users/{user}/toggle-active'
+ */
+export const toggleActive = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: toggleActive.url(args, options),
+    method: 'patch',
+})
+
+toggleActive.definition = {
+    methods: ["patch"],
+    url: '/dashboard/admin/users/{user}/toggle-active',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\AdminUserController::toggleActive
+ * @see app/Http/Controllers/AdminUserController.php:70
+ * @route '/dashboard/admin/users/{user}/toggle-active'
+ */
+toggleActive.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { user: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { user: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    user: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        user: typeof args.user === 'object'
+                ? args.user.id
+                : args.user,
+                }
+
+    return toggleActive.definition.url
+            .replace('{user}', parsedArgs.user.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\AdminUserController::toggleActive
+ * @see app/Http/Controllers/AdminUserController.php:70
+ * @route '/dashboard/admin/users/{user}/toggle-active'
+ */
+toggleActive.patch = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: toggleActive.url(args, options),
+    method: 'patch',
+})
+
+    /**
+* @see \App\Http\Controllers\AdminUserController::toggleActive
+ * @see app/Http/Controllers/AdminUserController.php:70
+ * @route '/dashboard/admin/users/{user}/toggle-active'
+ */
+    const toggleActiveForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: toggleActive.url(args, {
+                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                        _method: 'PATCH',
+                        ...(options?.query ?? options?.mergeQuery ?? {}),
+                    }
+                }),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\AdminUserController::toggleActive
+ * @see app/Http/Controllers/AdminUserController.php:70
+ * @route '/dashboard/admin/users/{user}/toggle-active'
+ */
+        toggleActiveForm.patch = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: toggleActive.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PATCH',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+    
+    toggleActive.form = toggleActiveForm
+const AdminUserController = { index, updateRole, toggleActive }
+
+export default AdminUserController

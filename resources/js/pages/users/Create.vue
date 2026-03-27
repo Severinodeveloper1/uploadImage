@@ -9,9 +9,14 @@ import { Spinner } from '@/components/ui/spinner';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 
+const props = defineProps<{
+    roles: string[];
+}>();
+
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Create User', href: '/dashboard/users/create' },
+    { title: 'Usuarios', href: '/dashboard/admin/users' },
+    { title: 'Crear Usuario', href: '/dashboard/users/create' },
 ];
 
 const form = useForm({
@@ -19,6 +24,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    role: props.roles[0] ?? '',
 });
 
 function submit() {
@@ -29,19 +35,19 @@ function submit() {
 </script>
 
 <template>
-    <Head title="Create User" />
+    <Head title="Crear Usuario" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-1 items-start justify-center p-8">
             <Card class="w-full max-w-md">
                 <CardHeader>
-                    <CardTitle>Create New User</CardTitle>
-                    <CardDescription>Add a new user account to the system.</CardDescription>
+                    <CardTitle>Crear Nuevo Usuario</CardTitle>
+                    <CardDescription>Agrega una nueva cuenta de usuario al sistema.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form @submit.prevent="submit" class="flex flex-col gap-5">
                         <div class="grid gap-2">
-                            <Label for="name">Full name</Label>
+                            <Label for="name">Nombre completo</Label>
                             <Input
                                 id="name"
                                 v-model="form.name"
@@ -55,7 +61,7 @@ function submit() {
                         </div>
 
                         <div class="grid gap-2">
-                            <Label for="email">Email address</Label>
+                            <Label for="email">Correo electrónico</Label>
                             <Input
                                 id="email"
                                 v-model="form.email"
@@ -68,34 +74,49 @@ function submit() {
                         </div>
 
                         <div class="grid gap-2">
-                            <Label for="password">Password</Label>
+                            <Label for="role">Rol</Label>
+                            <select
+                                id="role"
+                                v-model="form.role"
+                                required
+                                class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                            >
+                                <option v-for="role in roles" :key="role" :value="role">
+                                    {{ role }}
+                                </option>
+                            </select>
+                            <InputError :message="form.errors.role" />
+                        </div>
+
+                        <div class="grid gap-2">
+                            <Label for="password">Contraseña</Label>
                             <Input
                                 id="password"
                                 v-model="form.password"
                                 type="password"
                                 required
                                 autocomplete="new-password"
-                                placeholder="Password"
+                                placeholder="Contraseña"
                             />
                             <InputError :message="form.errors.password" />
                         </div>
 
                         <div class="grid gap-2">
-                            <Label for="password_confirmation">Confirm password</Label>
+                            <Label for="password_confirmation">Confirmar contraseña</Label>
                             <Input
                                 id="password_confirmation"
                                 v-model="form.password_confirmation"
                                 type="password"
                                 required
                                 autocomplete="new-password"
-                                placeholder="Confirm password"
+                                placeholder="Confirmar contraseña"
                             />
                             <InputError :message="form.errors.password_confirmation" />
                         </div>
 
                         <Button type="submit" class="mt-2 w-full" :disabled="form.processing">
                             <Spinner v-if="form.processing" />
-                            Create account
+                            Crear cuenta
                         </Button>
                     </form>
                 </CardContent>

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::projectInfo
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:238
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:244
  * @route '/api/v1/project'
  */
 export const projectInfo = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ projectInfo.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::projectInfo
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:238
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:244
  * @route '/api/v1/project'
  */
 projectInfo.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ projectInfo.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::projectInfo
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:238
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:244
  * @route '/api/v1/project'
  */
 projectInfo.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ projectInfo.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::projectInfo
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:238
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:244
  * @route '/api/v1/project'
  */
 projectInfo.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ projectInfo.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::projectInfo
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:238
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:244
  * @route '/api/v1/project'
  */
     const projectInfoForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ projectInfo.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::projectInfo
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:238
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:244
  * @route '/api/v1/project'
  */
         projectInfoForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ projectInfo.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::projectInfo
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:238
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:244
  * @route '/api/v1/project'
  */
         projectInfoForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -153,7 +153,7 @@ upload.post = (args: { bucket: string | number } | [bucket: string | number ] | 
     upload.form = uploadForm
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::index
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:102
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:103
  * @route '/api/v1/buckets/{bucket}/files'
  */
 export const index = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -168,7 +168,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::index
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:102
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:103
  * @route '/api/v1/buckets/{bucket}/files'
  */
 index.url = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -196,7 +196,7 @@ index.url = (args: { bucket: string | number } | [bucket: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::index
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:102
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:103
  * @route '/api/v1/buckets/{bucket}/files'
  */
 index.get = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -205,7 +205,7 @@ index.get = (args: { bucket: string | number } | [bucket: string | number ] | st
 })
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::index
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:102
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:103
  * @route '/api/v1/buckets/{bucket}/files'
  */
 index.head = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -215,7 +215,7 @@ index.head = (args: { bucket: string | number } | [bucket: string | number ] | s
 
     /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::index
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:102
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:103
  * @route '/api/v1/buckets/{bucket}/files'
  */
     const indexForm = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -225,7 +225,7 @@ index.head = (args: { bucket: string | number } | [bucket: string | number ] | s
 
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::index
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:102
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:103
  * @route '/api/v1/buckets/{bucket}/files'
  */
         indexForm.get = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -234,7 +234,7 @@ index.head = (args: { bucket: string | number } | [bucket: string | number ] | s
         })
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::index
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:102
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:103
  * @route '/api/v1/buckets/{bucket}/files'
  */
         indexForm.head = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -250,7 +250,7 @@ index.head = (args: { bucket: string | number } | [bucket: string | number ] | s
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::show
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:146
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:152
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
 export const show = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -265,7 +265,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::show
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:146
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:152
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
 show.url = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions) => {
@@ -291,7 +291,7 @@ show.url = (args: { bucket: string | number, id: string | number } | [bucket: st
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::show
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:146
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:152
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
 show.get = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -300,7 +300,7 @@ show.get = (args: { bucket: string | number, id: string | number } | [bucket: st
 })
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::show
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:146
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:152
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
 show.head = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -310,7 +310,7 @@ show.head = (args: { bucket: string | number, id: string | number } | [bucket: s
 
     /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::show
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:146
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:152
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
     const showForm = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -320,7 +320,7 @@ show.head = (args: { bucket: string | number, id: string | number } | [bucket: s
 
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::show
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:146
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:152
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
         showForm.get = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -329,7 +329,7 @@ show.head = (args: { bucket: string | number, id: string | number } | [bucket: s
         })
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::show
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:146
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:152
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
         showForm.head = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -345,7 +345,7 @@ show.head = (args: { bucket: string | number, id: string | number } | [bucket: s
     show.form = showForm
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::destroy
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:179
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:185
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
 export const destroy = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -360,7 +360,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::destroy
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:179
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:185
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
 destroy.url = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions) => {
@@ -386,7 +386,7 @@ destroy.url = (args: { bucket: string | number, id: string | number } | [bucket:
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::destroy
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:179
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:185
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
 destroy.delete = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -396,7 +396,7 @@ destroy.delete = (args: { bucket: string | number, id: string | number } | [buck
 
     /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::destroy
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:179
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:185
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
     const destroyForm = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -411,7 +411,7 @@ destroy.delete = (args: { bucket: string | number, id: string | number } | [buck
 
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::destroy
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:179
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:185
  * @route '/api/v1/buckets/{bucket}/files/{id}'
  */
         destroyForm.delete = (args: { bucket: string | number, id: string | number } | [bucket: string | number, id: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -427,7 +427,7 @@ destroy.delete = (args: { bucket: string | number, id: string | number } | [buck
     destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::folders
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:214
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:220
  * @route '/api/v1/buckets/{bucket}/folders'
  */
 export const folders = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -442,7 +442,7 @@ folders.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::folders
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:214
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:220
  * @route '/api/v1/buckets/{bucket}/folders'
  */
 folders.url = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -470,7 +470,7 @@ folders.url = (args: { bucket: string | number } | [bucket: string | number ] | 
 
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::folders
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:214
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:220
  * @route '/api/v1/buckets/{bucket}/folders'
  */
 folders.get = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -479,7 +479,7 @@ folders.get = (args: { bucket: string | number } | [bucket: string | number ] | 
 })
 /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::folders
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:214
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:220
  * @route '/api/v1/buckets/{bucket}/folders'
  */
 folders.head = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -489,7 +489,7 @@ folders.head = (args: { bucket: string | number } | [bucket: string | number ] |
 
     /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::folders
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:214
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:220
  * @route '/api/v1/buckets/{bucket}/folders'
  */
     const foldersForm = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -499,7 +499,7 @@ folders.head = (args: { bucket: string | number } | [bucket: string | number ] |
 
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::folders
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:214
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:220
  * @route '/api/v1/buckets/{bucket}/folders'
  */
         foldersForm.get = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -508,7 +508,7 @@ folders.head = (args: { bucket: string | number } | [bucket: string | number ] |
         })
             /**
 * @see \App\Http\Controllers\Api\V1\StorageApiController::folders
- * @see app/Http/Controllers/Api/V1/StorageApiController.php:214
+ * @see app/Http/Controllers/Api/V1/StorageApiController.php:220
  * @route '/api/v1/buckets/{bucket}/folders'
  */
         foldersForm.head = (args: { bucket: string | number } | [bucket: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

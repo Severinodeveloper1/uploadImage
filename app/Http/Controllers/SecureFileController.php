@@ -24,8 +24,16 @@ class SecureFileController extends Controller
 
         // Attempt web session auth
         $user = $request->user();
-        if ($user && $user->id === $file->project->user_id) {
-            return $this->streamFile($file);
+        if ($user) {
+            // Project owner always has access
+            if ($user->id === $file->project->user_id) {
+                return $this->streamFile($file);
+            }
+
+            // System project files: any authenticated user can access (e.g. ticket photos)
+            if (str_starts_with($file->project->slug, 'system-')) {
+                return $this->streamFile($file);
+            }
         }
 
         // Attempt API token auth

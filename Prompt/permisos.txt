@@ -1,0 +1,274 @@
+Eres un experto en Laravel 12 + Vue 3 + Inertia.js (TypeScript).
+Debes implementar un sistema de roles y permisos usando 
+**spatie/laravel-permission** en un proyecto existente 
+que tiene DOS módulos:
+
+=============================================================
+MÓDULO 1 — uploadImage (ya existente)
+=============================================================
+Entidades: User, Project, Bucket, StorageFile, ApiToken
+API REST en /api/v1 autenticada con ApiToken propio
+Panel web con Vue/Inertia (StorageBrowser)
+
+=============================================================
+MÓDULO 2 — Fichas de Servicio Técnico (nuevo)
+=============================================================
+Entidades: ServiceTicket, DocumentType, 
+           TicketAccessory, TicketPhoto
+Panel web con Vue/Inertia
+
+=============================================================
+ROLES DEL SISTEMA
+=============================================================
+
+| Rol         | Descripción                                  |
+|-------------|----------------------------------------------|
+| super_admin | Acceso total, bypassa todos los permisos     |
+| admin       | Gestiona usuarios, proyectos y configuración |
+| technician  | Opera fichas de servicio                     |
+| client      | Solo visualiza sus propias fichas e informes |
+
+NOTA: Los usuarios con ApiToken acceden SOLO por API REST
+y se validan por token (no por rol de Spatie).
+
+=============================================================
+MATRIZ DE PERMISOS
+=============================================================
+
+── MÓDULO: USERS ──
+- users.view_any      → super_admin, admin
+- users.create        → super_admin, admin
+- users.edit          → super_admin, admin
+- users.delete        → super_admin
+- users.assign_roles  → super_admin
+
+── MÓDULO: PROJECTS (uploadImage) ──
+- projects.view_any   → super_admin, admin
+- projects.view_own   → admin (solo los suyos)
+- projects.create     → super_admin, admin
+- projects.edit       → super_admin, admin
+- projects.delete     → super_admin
+
+── MÓDULO: BUCKETS ──
+- buckets.view        → super_admin, admin
+- buckets.create      → super_admin, admin
+- buckets.edit        → super_admin, admin
+- buckets.delete      → super_admin, admin
+
+── MÓDULO: STORAGE FILES ──
+- files.upload        → super_admin, admin
+- files.view          → super_admin, admin
+- files.delete        → super_admin, admin
+
+── MÓDULO: SERVICE TICKETS (fichas) ──
+- tickets.view_any    → super_admin, admin
+- tickets.view_own    → technician (solo las suyas)
+- tickets.create      → super_admin, admin, technician
+- tickets.edit        → super_admin, admin, technician
+- tickets.sign        → super_admin, admin, technician
+- tickets.approve_repair → super_admin, admin
+- tickets.delete      → super_admin
+- tickets.view_report → super_admin, admin, technician, client
+- tickets.export_pdf  → super_admin, admin, technician
+
+── MÓDULO: CONFIGURACIÓN ──
+- config.document_types → super_admin, admin
+- config.view_dashboard → super_admin, admin
+
+=============================================================
+LO QUE DEBES IMPLEMENTAR
+=============================================================
+
+── PASO 1: Instalación y configuración ──
+- composer require spatie/laravel-permission
+- Publicar migraciones y config
+- Añadir HasRoles trait al modelo User
+- Configurar guard correcto (web para panel, 
+  api/sanctum NO aplica aquí — los ApiTokens tienen 
+  su propio sistema, NO mezclar con Spatie)
+- En config/permission.php: usar PostgreSQL 
+  (verificar que UUID esté desactivado, usar IDs enteros)
+
+── PASO 2: Migración ──
+- NO tocar las tablas existentes de Spatie
+- Añadir campo 'role' display o helper si se necesita
+- Asegurarse que la migración de Spatie corra 
+  DESPUÉS de users
+
+── PASO 3: RolesAndPermissionsSeeder ──
+Crear seeder completo que:
+1. Cree todos los permisos de la matriz anterior
+   agrupados por módulo (para claridad)
+2. Cree los 4 roles y asigne sus permisos
+3. Cree un usuario super_admin por defecto:
+   - name: "Super Admin"
+   - email: "superadmin@system.local"
+   - password: configurable por .env 
+     (SUPER_ADMIN_PASSWORD)
+4. Sea IDEMPOTENTE (usar firstOrCreate, no fallar 
+   si se corre dos veces)
+
+── PASO 4: Middlewares ──
+Registrar en bootstrap/app.php (Laravel 12):
+- 'role' → RoleMiddleware
+- 'permission' → PermissionMiddleware
+- 'role_or_permission' → RoleOrPermissionMiddleware
+
+Crear middleware adicional:
+- EnsureUserIsActive → verifica que el usuario 
+  tenga is_active = true antes de cualquier acceso
+
+── PASO 5: Protección de Rutas ──
+
+En routes/web.php, agrupar así:
+
+// Rutas públicas: login, register (Fortify)
+
+Route::middleware(['auth', 'verified', EnsureUserIsActive])
+  ->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard')
+      ->middleware('permission:config.view_dashboard');
+
+    // MÓDULO uploadImage
+    Route::middleware('permission:projects.view_any|projects.view_own')
+      ->prefix('projects')->group(...);
+    
+    Route::middleware('permission:buckets.view')
+      ->prefix('buckets')->group(...);
+    
+    Route::middleware('permission:files.upload|files.view')
+      ->prefix('files')->group(...);
+
+    // MÓDULO Fichas de Servicio
+    Route::middleware('permission:tickets.view_any|tickets.view_own')
+      ->prefix('tickets')->group(...);
+  });
+
+// Las rutas /api/v1 NO usan middleware Spatie,
+// siguen usando ApiToken (no modificar)
+
+── PASO 6: Policies ──
+Crear Policy para cada modelo principal:
+
+ProjectPolicy:
+- viewAny: projects.view_any
+- view: projects.view_any OR (projects.view_own 
+        AND $project->user_id === $user->id)
+- create: projects.create
+- update: projects.edit
+- delete: projects.delete
+
+ServiceTicketPolicy:
+- viewAny: tickets.view_any
+- view: tickets.view_any OR 
+        (tickets.view_own AND technician_id === user)
+        OR (client: document_number coincide)
+- create: tickets.create
+- update: tickets.edit AND ticket->status no es 'closed'
+- sign: tickets.sign
+- exportPdf: tickets.export_pdf
+
+Registrar en AuthServiceProvider (o boot de AppServiceProvider
+en Laravel 12).
+
+── PASO 7: Compartir roles/permisos al frontend ──
+En HandleInertiaRequests.php, dentro de share():
+
+return [
+  ...parent::share($request),
+  'auth' => [
+    'user' => $request->user(),
+    'roles' => $request->user()?->getRoleNames(),
+    'permissions' => $request->user()?->getAllPermissions()
+                      ->pluck('name'),
+  ],
+];
+
+── PASO 8: Composable Vue para permisos ──
+Crear usePermissions.ts en resources/js/composables/:
+
+import { usePage } from '@inertiajs/vue3'
+import { computed } from 'vue'
+
+export function usePermissions() {
+  const page = usePage()
+  
+  const permissions = computed<string[]>(
+    () => (page.props.auth as any).permissions ?? []
+  )
+  const roles = computed<string[]>(
+    () => (page.props.auth as any).roles ?? []
+  )
+
+  const can = (permission: string): boolean =>
+    permissions.value.includes(permission)
+
+  const hasRole = (role: string): boolean =>
+    roles.value.includes(role)
+
+  const canAny = (perms: string[]): boolean =>
+    perms.some(p => permissions.value.includes(p))
+
+  return { can, hasRole, canAny, permissions, roles }
+}
+
+── PASO 9: Componente Vue <Can> ──
+Crear Can.vue en resources/js/components/:
+- Prop: permission (string) o role (string)
+- Solo renderiza el slot si el usuario tiene 
+  ese permiso/rol
+- Uso: <Can permission="tickets.create"> ... </Can>
+
+── PASO 10: Panel de Administración de Roles ──
+Crear vista Vue/Inertia en /admin/users:
+- Tabla de usuarios con su rol actual
+- Botón para cambiar rol (solo super_admin ve todos,
+  admin no puede asignar super_admin)
+- No usar librerías externas de UI, mantener el 
+  estilo del proyecto
+
+=============================================================
+REGLAS DE NEGOCIO CRÍTICAS
+=============================================================
+1. super_admin bypassa TODOS los permisos 
+   (usar Gate::before en AppServiceProvider)
+2. Un usuario solo puede tener UN rol activo 
+   (syncRoles, no givePermissionTo directo)
+3. client SOLO accede a tickets.view_report 
+   donde el documento del ticket coincida con 
+   el suyo (validar en Policy, no solo en ruta)
+4. Los ApiTokens del módulo uploadImage son 
+   completamente independientes de Spatie. 
+   NO modificar su lógica de autenticación.
+5. EnsureUserIsActive debe rechazar con 403 
+   (no redirect a login) si el usuario existe 
+   pero está inactivo
+6. Los permisos se cachean automáticamente con 
+   Spatie. Documentar cómo limpiar el caché 
+   cuando se cambie un rol: 
+   app()[\Spatie\Permission\PermissionRegistrar::class]
+     ->forgetCachedPermissions();
+
+=============================================================
+ARCHIVOS A ENTREGAR
+=============================================================
+1. Instrucciones de instalación (comandos exactos)
+2. config/permission.php relevante para PostgreSQL
+3. RolesAndPermissionsSeeder completo
+4. EnsureUserIsActive middleware
+5. Actualizacion de bootstrap/app.php
+6. HandleInertiaRequests.php actualizado
+7. ProjectPolicy y ServiceTicketPolicy
+8. AppServiceProvider con Gate::before para super_admin
+9. usePermissions.ts composable
+10. Can.vue componente
+11. Vista Inertia para /admin/users (gestión de roles)
+12. Fragmento de routes/web.php con la estructura 
+    de grupos propuesta
+
+=============================================================
+RESPONDE EN ORDEN, UN ARCHIVO A LA VEZ.
+Espera confirmación antes de continuar al siguiente.
+=============================================================
