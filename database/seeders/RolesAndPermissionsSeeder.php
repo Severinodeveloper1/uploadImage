@@ -140,10 +140,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'guard_name' => 'web',
         ]);
         $technician->syncPermissions([
+            'config.view_dashboard',
             'tickets.view_own',
             'tickets.create',
             'tickets.edit',
             'tickets.sign',
+            'tickets.approve_repair',
             'tickets.view_report',
             'tickets.export_pdf',
         ]);
