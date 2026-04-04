@@ -30,7 +30,23 @@ dmstorage_XXXXXXXXXXXXXXXXXXXXXXXXXXXX_32caracteres
 
 ---
 
-## Endpoints disponibles
+## Resumen de Endpoints
+
+| Método | Endpoint | Permiso | Descripción |
+|--------|----------|---------|-------------|
+| `GET` | `/project` | read | Info del proyecto |
+| `GET` | `/buckets` | read | Listar buckets |
+| `POST` | `/buckets` | write | Crear bucket |
+| `GET` | `/buckets/{slug}` | read | Info de un bucket |
+| `DELETE` | `/buckets/{slug}` | delete | Eliminar bucket |
+| `POST` | `/buckets/{slug}/upload` | write | Subir 1 archivo |
+| `POST` | `/buckets/{slug}/batch-upload` | write | Subir múltiples (1-20) |
+| `GET` | `/buckets/{slug}/files` | read | Listar archivos |
+| `GET` | `/buckets/{slug}/files/{id}` | read | Info de un archivo |
+| `DELETE` | `/buckets/{slug}/files/{id}` | delete | Eliminar archivo |
+| `GET` | `/buckets/{slug}/folders` | read | Listar carpetas |
+
+---
 
 Base URL: `https://tu-dominio.com/api/v1`
 
@@ -171,7 +187,147 @@ console.log(data.url); // URL del archivo subido
 
 ---
 
-### Listar archivos de un bucket
+### Subir múltiples archivos (Batch)
+
+```http
+POST /api/v1/buckets/{slug}/batch-upload
+Authorization: Bearer {token}
+Content-Type: multipart/form-data
+```
+
+**Parámetros form-data:**
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| `files[]` | File[] | Array de archivos a subir (mín: 1, máx: 20) |
+| `folder` | string | Carpeta destino (opcional). Ej: `thumbnails` o `2024/enero` |
+
+**Ejemplo con cURL:**
+```bash
+curl -X POST https://tu-dominio.com/api/v1/buckets/imagenes/batch-upload \
+  -H "Authorization: Bearer dmstorage_XXXX_XXXX" \
+  -F "files[]=@foto1.jpg" \
+  -F "files[]=@foto2.jpg" \
+  -F "files[]=@foto3.png" \
+  -F "folder=avatares"
+```
+
+**Ejemplo con JavaScript (fetch):**
+```javascript
+const formData = new FormData();
+formData.append('files[]', fileInput.files[0]);
+formData.append('files[]', fileInput.files[1]);
+formData.append('files[]', fileInput.files[2]);
+formData.append('folder', 'avatares'); // opcional
+
+const response = await fetch('/api/v1/buckets/imagenes/batch-upload', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer dmstorage_XXXX_XXXX',
+  },
+  body: formData,
+});
+
+const data = await response.json();
+console.log(data.data.uploaded_count); // Archivos subidos exitosamente
+console.log(data.data.errors_count);   // Archivos con error
+```
+
+**Respuesta exitosa (Todos subidos - 201):**
+```json
+{
+  "success": true,
+  "data": {
+    "uploaded": [
+      {
+        "id": 42,
+        "name": "foto1.jpg",
+        "path": "avatares/550e8400-e29b-41d4-a716-446655440000.jpg",
+        "url": "https://tu-dominio.com/storage/mi-proyecto/imagenes/avatares/uuid1.jpg",
+        "size": 204800,
+        "mime_type": "image/jpeg",
+        "width": 800,
+        "height": 600,
+        "created_at": "2025-08-15T12:00:00.000000Z"
+      }
+    ],
+    "uploaded_count": 1,
+    "errors": [],
+    "errors_count": 0
+  }
+}
+```
+
+**Respuesta parcial (Algunos fallaron - 207):**
+```json
+{
+  "success": true,
+  "data": {
+    "uploaded": [
+      {
+        "id": 42,
+        "name": "foto1.jpg",
+        "path": "avatares/uuid1.jpg",
+        "url": "https://tu-dominio.com/storage/mi-proyecto/imagenes/avatares/uuid1.jpg",
+        "size": 204800,
+        "mime_type": "image/jpeg",
+        "width": 800,
+        "height": 600,
+        "created_at": "2025-08-15T12:00:00.000000Z"
+      }
+    ],
+    "uploaded_count": 1,
+    "errors": [
+      {
+        "index": 1,
+        "name": "documento.pdf",
+        "code": "MIME_TYPE_NOT_ALLOWED",
+        "message": "El tipo de archivo application/pdf no está permitido."
+      },
+      {
+        "index": 2,
+        "name": "video.mp4",
+        "code": "FILE_TOO_LARGE",
+        "message": "El archivo supera el límite de 5MB."
+      }
+    ],
+    "errors_count": 2
+  }
+}
+```
+
+**Respuesta error (Ninguno subido - 422):**
+```json
+{
+  "success": false,
+  "data": {
+    "uploaded": [],
+    "uploaded_count": 0,
+    "errors": [
+      {
+        "index": 0,
+        "name": "foto1.jpg",
+        "code": "STORAGE_LIMIT_EXCEEDED",
+        "message": "Límite de almacenamiento del proyecto alcanzado."
+      }
+    ],
+    "errors_count": 1
+  }
+}
+```
+
+**Códigos de estado:**
+- `201` — Todos los archivos se subieron exitosamente
+- `207` — Multi-status: algunos archivos se subieron, otros fallaron
+- `422` — Error: ningún archivo se pudo subir
+
+> **Validaciones por archivo:**
+> - Cada archivo se valida individualmente (MIME type, tamaño)
+> - Los archivos inválidos se reportan en `errors[]` pero no interrumpen el proceso
+> - Si se alcanza el límite de almacenamiento, el batch se detiene (no se intentan más archivos)
+> - Máximo 20 archivos por request
+
+---
 
 ```http
 GET /api/v1/buckets/{slug}/files
@@ -264,6 +420,73 @@ con código `403 Forbidden`.
 
 ---
 
+## Buenas prácticas
+
+### 1. Manejo de errores
+
+Siempre verifica `success` y el código de estado HTTP:
+
+```javascript
+const response = await fetch('/api/v1/buckets/imagenes/batch-upload', {
+  // ...
+});
+
+if (!response.ok) {
+  const error = await response.json();
+  console.error(`Error ${response.status}:`, error.error || error);
+  return;
+}
+
+const { data } = await response.json();
+console.log(`Subidos: ${data.uploaded_count}, Errores: ${data.errors_count}`);
+```
+
+### 2. Bucket vs Carpeta
+
+- **Bucket**: Contenedor de nivel superior. Útil para separar tipos de contenido (avatares, documentos, etc.)
+- **Carpeta**: Estructura dentro de un bucket. Usa para organizar por fecha o proyecto: `2025/marzo`, `usuarios/123`
+
+### 3. Validación previa
+
+Valida MIME types y tamaños **antes** de enviar a la API:
+
+```javascript
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+for (const file of filesToUpload) {
+  if (!ALLOWED_TYPES.includes(file.type)) {
+    alert(`${file.name}: tipo no permitido`);
+    continue;
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    alert(`${file.name}: archivo muy grande`);
+    continue;
+  }
+}
+```
+
+### 4. Batch vs Upload individual
+
+- **Upload** (`/upload`): Usa para casos esporádicos de un archivo
+- **Batch** (`/batch-upload`): Usa para importación masiva, drag-and-drop múltiple, o integración con sistemas
+
+### 5. Rate limiting
+
+No hay límite de rate en la API actual. Para evitar sobrecargas:
+- Agrupa requests de batch-upload (máx 20 archivos por request)
+- Implementa reintentos con backoff exponencial
+- Usa carpetas para organizar uploads grandes
+
+### 6. Seguridad de tokens
+
+- ⚠️ **Nunca** guardes tokens en el frontend (localStorage, sessionStorage)
+- Solicita tokens a través de un proxy backend seguro
+- Marca tokens con expiración si es posible
+- Revoca tokens cuando cambies integraciones
+
+---
+
 ## Acceder a archivos privados
 
 Los archivos de buckets privados (`is_public: false`) no son accesibles directamente.
@@ -304,7 +527,36 @@ const blob = await response.blob();
 
 ## Ejemplos por lenguaje
 
-### PHP (cURL)
+### PHP (Batch Upload con cURL)
+```php
+$ch = curl_init('https://tu-dominio.com/api/v1/buckets/imagenes/batch-upload');
+$files = ['/ruta/foto1.jpg', '/ruta/foto2.jpg', '/ruta/foto3.png'];
+
+$postFields = ['folder' => 'avatares'];
+foreach ($files as $i => $filePath) {
+    $postFields["files[$i]"] = new CURLFile($filePath, 'image/jpeg', basename($filePath));
+}
+
+curl_setopt_array($ch, [
+    CURLOPT_POST => true,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPHEADER => [
+        'Authorization: Bearer dmstorage_XXXX_XXXX',
+    ],
+    CURLOPT_POSTFIELDS => $postFields,
+]);
+
+$response = json_decode(curl_exec($ch), true);
+curl_close($ch);
+
+echo "Archivos subidos: " . $response['data']['uploaded_count'] . "\n";
+echo "Errores: " . $response['data']['errors_count'] . "\n";
+foreach ($response['data']['uploaded'] as $file) {
+    echo "✓ " . $file['name'] . " → " . $file['url'] . "\n";
+}
+```
+
+### Python (Batch Upload con requests)
 ```php
 $ch = curl_init('https://tu-dominio.com/api/v1/buckets/imagenes/upload');
 curl_setopt_array($ch, [
@@ -323,7 +575,37 @@ curl_close($ch);
 echo $response['url'];
 ```
 
-### Python (requests)
+### Python (Batch Upload con requests)
+```python
+import requests
+
+token = "dmstorage_XXXX_XXXX"
+headers = {"Authorization": f"Bearer {token}"}
+files_list = ['/ruta/foto1.jpg', '/ruta/foto2.jpg', '/ruta/foto3.png']
+
+# Preparar archivos como array con key 'files[]'
+files = [('files[]', open(f, 'rb')) for f in files_list]
+data = {'folder': 'avatares'}
+
+response = requests.post(
+    "https://tu-dominio.com/api/v1/buckets/imagenes/batch-upload",
+    headers=headers,
+    files=files,
+    data=data,
+)
+
+result = response.json()
+print(f"Subidos: {result['data']['uploaded_count']}")
+print(f"Errores: {result['data']['errors_count']}")
+
+for file in result['data']['uploaded']:
+    print(f"✓ {file['name']} → {file['url']}")
+
+for error in result['data']['errors']:
+    print(f"✗ {error['name']} ({error['code']}): {error['message']}")
+```
+
+### Node.js (Batch Upload con axios)
 ```python
 import requests
 
@@ -341,7 +623,47 @@ with open("/ruta/foto.jpg", "rb") as f:
 print(response.json()["url"])
 ```
 
-### Node.js (axios)
+### Node.js (Batch Upload con axios)
+```javascript
+const axios = require('axios');
+const FormData = require('form-data');
+const fs = require('fs');
+
+const form = new FormData();
+const files = ['/ruta/foto1.jpg', '/ruta/foto2.jpg', '/ruta/foto3.png'];
+
+// Agregar cada archivo con key 'files[]'
+files.forEach(file => {
+  form.append('files[]', fs.createReadStream(file));
+});
+form.append('folder', 'avatares');
+
+axios.post(
+  'https://tu-dominio.com/api/v1/buckets/imagenes/batch-upload',
+  form,
+  {
+    headers: {
+      'Authorization': 'Bearer dmstorage_XXXX_XXXX',
+      ...form.getHeaders(),
+    },
+  }
+)
+.then(({ data }) => {
+  console.log(`Subidos: ${data.data.uploaded_count}`);
+  console.log(`Errores: ${data.data.errors_count}`);
+  
+  data.data.uploaded.forEach(file => {
+    console.log(`✓ ${file.name} → ${file.url}`);
+  });
+  
+  data.data.errors.forEach(error => {
+    console.log(`✗ ${error.name} (${error.code}): ${error.message}`);
+  });
+})
+.catch(error => console.error(error.response.data));
+```
+
+### cURL
 ```javascript
 const axios = require('axios');
 const FormData = require('form-data');
@@ -364,3 +686,14 @@ const { data } = await axios.post(
 
 console.log(data.url);
 ```
+
+### Comparativa: Upload vs Batch Upload
+
+| Aspecto | Upload (single) | Batch Upload |
+|--------|-----------------|--------------|
+| **Endpoint** | `POST /buckets/{slug}/upload` | `POST /buckets/{slug}/batch-upload` |
+| **Archivos** | 1 por request | 1-20 por request |
+| **Eficiencia** | Múltiples requests | Overhead reducido |
+| **Validación fallida** | Falla todo | Reporta por archivo |
+| **Código estado** | 201 / 422 | 201 / 207 / 422 |
+| **Caso de uso** | Un archivo ocasional | Carga masiva, importación |

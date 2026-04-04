@@ -98,6 +98,101 @@ class StorageApiController extends Controller
     }
 
     /**
+     * Upload multiple files to a bucket in a single request.
+     */
+    public function batchUpload(Request $request, string $bucketSlug): JsonResponse
+    {
+        $denied = AuthenticateApiToken::checkPermission($request, 'write');
+        if ($denied) return $denied;
+
+        $project = $request->get('project');
+        $bucket = $project->buckets()->where('slug', $bucketSlug)->first();
+
+        if (!$bucket) {
+            return response()->json([
+                'success' => false,
+                'error' => [
+                    'code' => 'BUCKET_NOT_FOUND',
+                    'message' => 'Bucket no encontrado.',
+                ],
+            ], 404);
+        }
+
+        $request->validate([
+            'files' => 'required|array|min:1|max:20',
+            'files.*' => 'file',
+            'folder' => 'nullable|string|max:500',
+        ]);
+
+        $folder = $request->input('folder', '');
+        $maxBytes = $bucket->max_file_size_mb * 1024 * 1024;
+
+        $uploaded = [];
+        $errors = [];
+
+        foreach ($request->file('files') as $index => $file) {
+            // Check MIME type
+            if (!$bucket->isMimeTypeAllowed($file->getMimeType())) {
+                $errors[] = [
+                    'index' => $index,
+                    'name' => $file->getClientOriginalName(),
+                    'code' => 'MIME_TYPE_NOT_ALLOWED',
+                    'message' => 'El tipo de archivo ' . $file->getMimeType() . ' no está permitido.',
+                ];
+                continue;
+            }
+
+            // Check file size
+            if ($file->getSize() > $maxBytes) {
+                $errors[] = [
+                    'index' => $index,
+                    'name' => $file->getClientOriginalName(),
+                    'code' => 'FILE_TOO_LARGE',
+                    'message' => "El archivo supera el límite de {$bucket->max_file_size_mb}MB.",
+                ];
+                continue;
+            }
+
+            // Check project storage limit
+            if (!$this->storageService->hasAvailableStorage($project, $file->getSize())) {
+                $errors[] = [
+                    'index' => $index,
+                    'name' => $file->getClientOriginalName(),
+                    'code' => 'STORAGE_LIMIT_EXCEEDED',
+                    'message' => 'Límite de almacenamiento del proyecto alcanzado.',
+                ];
+                break; // No tiene sentido seguir si no hay espacio
+            }
+
+            $storageFile = $this->storageService->upload($file, $bucket, $folder);
+
+            $uploaded[] = [
+                'id' => $storageFile->id,
+                'name' => $storageFile->original_name,
+                'path' => $storageFile->path,
+                'url' => $storageFile->url,
+                'size' => $storageFile->size_bytes,
+                'mime_type' => $storageFile->mime_type,
+                'width' => $storageFile->width,
+                'height' => $storageFile->height,
+                'created_at' => $storageFile->created_at->toISOString(),
+            ];
+        }
+
+        $status = count($errors) === 0 ? 201 : (count($uploaded) > 0 ? 207 : 422);
+
+        return response()->json([
+            'success' => count($uploaded) > 0,
+            'data' => [
+                'uploaded' => $uploaded,
+                'uploaded_count' => count($uploaded),
+                'errors' => $errors,
+                'errors_count' => count($errors),
+            ],
+        ], $status);
+    }
+
+    /**
      * List files in a bucket with optional folder filtering.
      */
     public function index(Request $request, string $bucketSlug): JsonResponse

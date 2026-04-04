@@ -17,6 +17,7 @@ Route::prefix('v1')->middleware(AuthenticateApiToken::class)->group(function () 
 
     // Files
     Route::post('/buckets/{bucket}/upload', [StorageApiController::class, 'upload']);
+    Route::post('/buckets/{bucket}/batch-upload', [StorageApiController::class, 'batchUpload']);
     Route::get('/buckets/{bucket}/files', [StorageApiController::class, 'index']);
     Route::get('/buckets/{bucket}/files/{id}', [StorageApiController::class, 'show']);
     Route::delete('/buckets/{bucket}/files/{id}', [StorageApiController::class, 'destroy']);
